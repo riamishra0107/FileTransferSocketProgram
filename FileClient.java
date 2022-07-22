@@ -7,131 +7,89 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class FileClient {
-	public static void main(String[] args) throws Exception{
-		
-		 int port=Constant.port;
-		 String ip =Constant.ip;
-		 System.out.println("The Client Side");
-		 
-		 while(true)
-		 {
-			
-			 Socket socket = new Socket(ip, port);
-			 makeRequest(socket);
-			 
-		 }
+	public static void main(String[] args) throws Exception {
+
+		int port = Constant.port;
+		String ip = Constant.ip;
+		System.out.println("The Client Side");
+
+		while (true) {
+
+			Socket socket = new Socket(ip, port);
+			makeRequest(socket);
+
+		}
 	}
 
 	public static void makeRequest(Socket socket) throws Exception {
-		//System.out.println("Enter your request to transfer file (post) or download the file(get) ");
-		System.out.println("Enter the choice =1 (for sending the file) or choice=2(for downloading the file)");
-		 Scanner sc = new Scanner(System.in);
-//		 String reqType = sc.nextLine();
-		 int choice = sc.nextInt();
-//		 makeRequest(socket);
-//         System.out.println(reqType);
-		
-		 if(choice == 1) 
-		 {
-			     try 
-			       {
-				        transferfile(socket);
-			       }
-				
-			     catch (Exception e) 
-			       {
-				e.printStackTrace();
-			       }
-		 } 
-			
-			else if (choice == 2)
-			{
-				try {
-						receivingfile(socket);
-					}
-				
-				
-				catch (Exception e) 
-				    {
-					    e.printStackTrace();
-				    }
+		System.out.println("Enter the choice = 1 (for sending the file) or choice = 2 (for downloading the file)");
+		Scanner sc = new Scanner(System.in);
+		int choice = sc.nextInt();
+
+		if (choice == 1) {
+			try {
+				transferFile(socket);
 			}
-			else 
-				{
-					System.out.println("no choice");
-					
-				}
-	}
-		public static void transferfile(Socket socket) 
-		{
-			Scanner sc =new Scanner(System.in);
-			System.out.println("Enter the name of the file:");
-			String name =sc.nextLine();
-			System.out.println("Enter the content of the file:");
-			String content= sc.nextLine();
-			Request data = new Request("post",name,content);
-			ObjectOutputStream outputStream ;
-			try
-			{
-				 outputStream = new ObjectOutputStream(socket.getOutputStream());
-				
-				outputStream.writeObject(data);
-				System.out.println("The file is sent");
-			} catch(IOException e)
-			{
-				System.out.println("Error in sending the file");
+
+			catch (Exception e) {
 				e.printStackTrace();
-			}	
-		}
-		
-		public static void receivingfile(Socket socket)	 throws Exception
-		{
-			
-			Scanner sc =new Scanner(System.in);
-			System.out.println("Enter the name of the file:");
-			String name =sc.nextLine();
-			
-			ObjectOutputStream outputstream =new ObjectOutputStream(socket.getOutputStream());
-			ObjectInputStream inputStream =new ObjectInputStream(socket.getInputStream());
-			System.out.println("Enter the name of the file:");
-			
-			Request data =new Request("get",name," ");
-			outputstream.writeObject(data);
-			
-			Request receiveData=(Request)inputStream.readObject();
-			File filetobeDownloaded = new File(Constant.clientPath+receiveData.fileName);
-			
-			FileOutputStream fileOutputStream = new FileOutputStream(filetobeDownloaded);
-			fileOutputStream.write((receiveData.fileContent).getBytes());
-			
-			
-			
-			
-	
-			
-			
-				
-			
-			
-			
-			
-			
-			
-			
+			}
 		}
 
-		
-		
-		
-		    
-		    
-		    
-		    
-		    
-			
-			
-		
-			
+		else if (choice == 2) {
+			try {
+				receivingFile(socket);
+			}
+
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("no choice");
+
 		}
-	
-		// TODO Auto-generated method stub
+	}
+
+	public static void transferFile(Socket socket) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the name of the file:");
+		String name = sc.nextLine();
+		System.out.println("Enter the content of the file:");
+		String content = sc.nextLine();
+		Request data = new Request("post", name, content);
+		ObjectOutputStream outputStream;
+		try {
+			outputStream = new ObjectOutputStream(socket.getOutputStream());
+
+			outputStream.writeObject(data);
+			System.out.println("The file is sent");
+		} catch (IOException e) {
+			System.out.println("Error in sending the file");
+			e.printStackTrace();
+		}
+	}
+
+	public static void receivingFile(Socket socket) throws Exception {
+
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the name of the file:");
+		String name = sc.nextLine();
+
+		ObjectOutputStream outputstream = new ObjectOutputStream(socket.getOutputStream());
+		ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+		System.out.println("Enter the name of the file:");
+
+		Request data = new Request("get", name, " ");
+		outputstream.writeObject(data);
+
+		Request receiveData = (Request) inputStream.readObject();
+		File filetobeDownloaded = new File(Constant.clientPath + receiveData.fileName);
+
+		FileOutputStream fileOutputStream = new FileOutputStream(filetobeDownloaded);
+		fileOutputStream.write((receiveData.fileContent).getBytes());
+
+	}
+
+}
+
+// TODO Auto-generated method stub

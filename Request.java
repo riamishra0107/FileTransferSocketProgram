@@ -1,6 +1,6 @@
 import java.io.Serializable;
-public class Request implements Serializable
-{
+
+public class Request implements Serializable {
 
 	/**
 	 * 
@@ -9,21 +9,14 @@ public class Request implements Serializable
 	public String reqType;
 	public String fileName;
 	public String fileContent;
-	
-	
-	
-	Request(String reqType,String fileName,String fileContent)
+
+	Request(String reqType, String fileName, String fileContent)
 	{
-		this.reqType=reqType;
-		this.fileName=fileName;
-		this.fileContent=fileContent;
-		
+		this.reqType = reqType;
+		this.fileName = fileName;
+		this.fileContent = fileContent;
+
 	}
 
-
-
-	
-		// TODO Auto-generated constructor stub
-	}
-
-
+	// TODO Auto-generated constructor stub
+}
