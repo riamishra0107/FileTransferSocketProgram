@@ -7,10 +7,11 @@ import java.net.*;
 
 public class FileServer
 {
+	static int port =Constant.port;
 	public static void main(String[] args) throws Exception
 	{
 		System.out.println("The Server Side");
-		ServerSocket serversocket= new ServerSocket(3996);
+		ServerSocket serversocket= new ServerSocket(port);
 		
 		while(true)
 		{	
@@ -26,7 +27,6 @@ public class FileServer
 		ObjectInputStream inputStream =new ObjectInputStream(socket.getInputStream());
 		Request data =(Request)inputStream.readObject();
 		
-//		System.out.println(data.reqType);
 		
 		if((data.reqType).equals("post") == true)
 		{
@@ -46,7 +46,7 @@ public class FileServer
 		
 		System.out.println(fileName);
 		
-		File creatingnewFile= new File("C:\\Users\\Ria Mishra\\server\\"+fileName);
+		File creatingnewFile= new File(Constant.serverPath+fileName);
 		FileOutputStream fileOutputStream = new FileOutputStream(creatingnewFile);
 		
 		fileOutputStream.write(fileContent.getBytes());	
@@ -54,7 +54,7 @@ public class FileServer
 	
 	public static void sendTheFile(Request data ,ObjectOutputStream outputstream) throws Exception
 	{
-		File file = new File("C:\\Users\\Ria Mishra\\server\\"+data.fileName);
+		File file = new File(Constant.serverPath+data.fileName);
 		if(file.exists() == true) 
 		{
 			byte[] fileInBytes = new byte[(int)(file.length())];

@@ -8,35 +8,43 @@ import java.util.Scanner;
 
 public class FileClient {
 	public static void main(String[] args) throws Exception{
-		 
+		
+		 int port=Constant.port;
+		 String ip =Constant.ip;
 		 System.out.println("The Client Side");
+		 
 		 while(true)
 		 {
-			 Socket socket = new Socket("localhost", 3996);
-			 MakeRequest(socket);
+			
+			 Socket socket = new Socket(ip, port);
+			 makeRequest(socket);
+			 
 		 }
 	}
 
-	public static void MakeRequest(Socket socket) throws Exception {
-		System.out.println("Enter your request to transfer file (post) or download the file(get) ");
+	public static void makeRequest(Socket socket) throws Exception {
+		//System.out.println("Enter your request to transfer file (post) or download the file(get) ");
+		System.out.println("Enter the choice =1 (for sending the file) or choice=2(for downloading the file)");
 		 Scanner sc = new Scanner(System.in);
-		 String reqType = sc.nextLine();
-		 System.out.println(reqType);
+//		 String reqType = sc.nextLine();
+		 int choice = sc.nextInt();
+//		 makeRequest(socket);
+//         System.out.println(reqType);
 		
-		if(reqType.toLowerCase().equals("post") == true) 
-		{
-			try 
-			{
-				transferfile(socket);
-			}
+		 if(choice == 1) 
+		 {
+			     try 
+			       {
+				        transferfile(socket);
+			       }
 				
-			catch (Exception e) 
-			{
+			     catch (Exception e) 
+			       {
 				e.printStackTrace();
-			}
-		}
+			       }
+		 } 
 			
-			else if (reqType.toLowerCase().equals("get") == true)
+			else if (choice == 2)
 			{
 				try {
 						receivingfile(socket);
@@ -44,11 +52,11 @@ public class FileClient {
 				
 				
 				catch (Exception e) 
-				{
-					e.printStackTrace();
-				}
+				    {
+					    e.printStackTrace();
+				    }
 			}
-				else 
+			else 
 				{
 					System.out.println("no choice");
 					
@@ -82,8 +90,6 @@ public class FileClient {
 			Scanner sc =new Scanner(System.in);
 			System.out.println("Enter the name of the file:");
 			String name =sc.nextLine();
-			//System.out.println("Enter the content of the file:");
-			//String content= sc.nextLine();
 			
 			ObjectOutputStream outputstream =new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream inputStream =new ObjectInputStream(socket.getInputStream());
@@ -93,7 +99,7 @@ public class FileClient {
 			outputstream.writeObject(data);
 			
 			Request receiveData=(Request)inputStream.readObject();
-			File filetobeDownloaded = new File("C:\\Users\\Ria Mishra\\clientserver\\"+receiveData.fileName);
+			File filetobeDownloaded = new File(Constant.clientPath+receiveData.fileName);
 			
 			FileOutputStream fileOutputStream = new FileOutputStream(filetobeDownloaded);
 			fileOutputStream.write((receiveData.fileContent).getBytes());
