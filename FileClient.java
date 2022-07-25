@@ -25,29 +25,38 @@ public class FileClient {
 		System.out.println("Enter the choice = 1 (for sending the file) or choice = 2 (for downloading the file)");
 		Scanner sc = new Scanner(System.in);
 		int choice = sc.nextInt();
-
+        try {
 		if (choice == 1) {
-			try {
+			//try {
 				transferFile(socket);
-			}
+			//}
 
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+			//catch (Exception e) {
+				//e.printStackTrace();
+			//}
 		}
 
 		else if (choice == 2) {
-			try {
+			//try {
 				receivingFile(socket);
-			}
+			//}
 
-			catch (Exception e) {
+			//catch (Exception e) {
+				//e.printStackTrace();
+			}
+		 else {
+			System.out.println("no choice");
+			}
+		}
+				catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else {
-			System.out.println("no choice");
-
-		}
+		 
+		 
+		 
+		//catch (Exception e) {
+			//e.printStackTrace();
+		//}
 	}
 
 	public static void transferFile(Socket socket) {
