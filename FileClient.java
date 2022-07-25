@@ -27,22 +27,15 @@ public class FileClient {
 		int choice = sc.nextInt();
         try {
 		if (choice == 1) {
-			//try {
+			
 				transferFile(socket);
-			//}
-
-			//catch (Exception e) {
-				//e.printStackTrace();
-			//}
+			
 		}
 
 		else if (choice == 2) {
-			//try {
+			
 				receivingFile(socket);
-			//}
-
-			//catch (Exception e) {
-				//e.printStackTrace();
+			
 			}
 		 else {
 			System.out.println("no choice");
@@ -51,12 +44,6 @@ public class FileClient {
 				catch (Exception e) {
 				e.printStackTrace();
 			}
-		 
-		 
-		 
-		//catch (Exception e) {
-			//e.printStackTrace();
-		//}
 	}
 
 	public static void transferFile(Socket socket) {
